@@ -1,0 +1,85 @@
+﻿@model LeecherReg.Models.DbDetails
+
+@{
+    ViewBag.Title = "DB Connection Details";
+    Layout = "~/Views/Main/_layout.cshtml";
+        var  Value = Model.DefaultConnections();
+}
+
+<style type="text/css">
+     .connectionselect{
+             margin: 5px 0px 10px;
+     }
+    .bottom5px {
+        margin-bottom: 5px;
+    }
+</style>
+
+@using(Html.BeginForm("DBConnectionDetails","Account",FormMethod.Post))
+{
+<div class="col-xs-12" id="connectiondetails">
+     <div class="col-xs-12" style="margin-bottom:10px">
+            @Html.DropDownListFor(model => model.Connection, new SelectList(@Value, "Value", "Text"),"-- select --", new {  @placeholder = "Choose Connection"})
+               @Html.ValidationMessageFor(m => m.Connection)    
+     </div>
+        <div id="sqlserver">
+        <div class="col-xs-12 bottom5px">
+             @Html.TextBoxFor(m => m.DataSource, new { @class = "width100 form-control" , @placeholder = "Enter Data Source"})
+          @Html.ValidationMessageFor(m => m.DataSource)
+             </div>
+         <div class="col-xs-12 bottom5px">
+             @Html.TextBoxFor(m => m.InitialCatalog,new { @class = "width100 form-control" , @placeholder = "Enter Initial Catalog"})
+         @Html.ValidationMessageFor(m => m.InitialCatalog)
+               </div>
+         <div class="col-xs-12 bottom5px">
+             @Html.TextBoxFor(m => m.IntegratedSecurity, new { @class = "width100 form-control", @placeholder = "Enter Integrated Security" })
+          @Html.ValidationMessageFor(m => m.IntegratedSecurity)
+              </div>
+         <div class="col-xs-12 bottom5px">
+             @Html.TextBoxFor(m => m.ServerUserId,new { @class = "width100 form-control", @placeholder = "Enter Server User id" })
+         @Html.ValidationMessageFor(m => m.ServerUserId)
+               </div>
+         <div class="col-xs-12 bottom5px">
+             @Html.TextBoxFor(m => m.PassWord, new { @class = "width100 form-control" , @placeholder = "Enter password" })
+          @Html.ValidationMessageFor(m => m.PassWord)
+              </div>
+              </div>
+              <div id="sqlite" style="display:none">
+                  <div class="col-xs-12 bottom5px">
+             @Html.TextBoxFor(m => m.Database, new { @class = "width100 form-control" , @placeholder = "Enter Database name" })
+          @Html.ValidationMessageFor(m => m.Database)
+              </div>
+                  
+                  
+              </div>
+    <div class="col-xs-12">
+        <input style="margin:14px;float:right" class="btn btn-primary next nextBtn" type="submit" value="Next" />
+    </div>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+
+        $('.stepwizard-step a[id=connectiondetails]').removeClass('btn-default').addClass('btn-primary');
+        $('.stepwizard-step a[id=userdetails]').removeClass('btn-primary').addClass('btn-default');
+        $('.stepwizard-step a[id=companydetails]').removeClass('btn-primary').addClass('btn-default');
+         $('.stepwizard-step a[id=finishdetails]').removeClass('btn-primary').addClass('btn-default');
+       
+        $('#Connection').change(function(){
+            var value = $('#Connection :selected').val();
+            if(value == 0)
+            {
+                $('#sqlserver').css("display","block");
+                 $('#sqlite').css("display","none");
+            }
+            else if(value == 1){
+                $('#sqlite').css("display","block");
+                 $('#sqlserver').css("display","none");
+            }
+            else{                
+                  $('#sqlite').css("display","block");
+                 $('#sqlserver').css("display","none");
+            }
+        });
+    })    
+</script>

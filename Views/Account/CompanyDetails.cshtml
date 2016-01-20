@@ -1,0 +1,115 @@
+﻿@model LeecherReg.Models.CompanyDetails
+
+@{
+    ViewBag.Title = "CompanyDetails";
+    Layout = "~/Views/Main/_layout.cshtml";
+}
+      
+<style type="text/css">
+  .width100
+    {
+          width : 100%;
+    }
+    .companydetails .col-xs-6 {
+    bottom: 4px;
+    }
+</style>
+
+@using(Html.BeginForm("CompanyDetails","Account",FormMethod.Post, new { @id = "companyform" }))
+{
+        @Html.ValidationSummary(true)
+<div class="col-xs-12" id="companydetails">
+    <div class="col-xs-6">
+        <div class="col-xs-12">
+           @Html.LabelFor(m => m.CompanyName)
+        </div>
+         <div class="col-xs-12">
+             @Html.TextBoxFor(m => m.CompanyName, new { @class = "width100 form-control required" })
+             @Html.ValidationMessageFor(m => m.CompanyName)
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <div class="col-xs-12">
+             @Html.LabelFor(m => m.Email)
+        </div>
+         <div class="col-xs-12">
+             @Html.TextBoxFor(m => m.Email,new { @class = "width100 form-control required" })
+              @Html.ValidationMessageFor(m => m.Email)
+        </div>
+    </div>
+
+    <div class="col-xs-6">
+        <div class="col-xs-12">
+             @Html.LabelFor(m => m.Telephone)
+        </div>
+         <div class="col-xs-12">
+             @Html.TextBoxFor(m => m.Telephone,new { @class = "width100 form-control required" })
+              @Html.ValidationMessageFor(m => m.Telephone)
+        </div>
+    </div>
+   <div class="col-xs-12">
+        <div class="col-xs-12">
+           @Html.LabelFor(m => m.Address)
+        </div>
+         <div class="col-xs-12">
+             @Html.TextAreaFor(m => m.Address, new { @class = "width100 form-control required" })
+              @Html.ValidationMessageFor(m => m.Address)
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="col-xs-12">
+           @Html.LabelFor(m => m.Description)
+        </div>
+         <div class="col-xs-12">
+             @Html.TextAreaFor(m => m.Description, new { @class = "width100 form-control required" })
+              @Html.ValidationMessageFor(m => m.Description)
+        </div>
+    </div>
+     <div class="col-xs-12">
+  
+        <input style="margin:14px;float:right" class="btn btn-primary" type="submit" value="Next" />
+    </div>
+</div>
+}
+<script>
+    $(document).ready(function () {
+        $("#companyform").validate({
+            rules: {
+                Email: {
+                    required: true,
+                    email: true
+                },
+                Telephone: {
+                    required: true,
+                    minlength: 10,
+                    digits : true
+                },
+                CompanyName: {
+                    required : true,
+                },
+                Description: {
+                    required: true,
+                    minlength: 100,
+
+              }
+            },
+            messages: {
+                CompanyName: "Please specify company name",
+                Address: "Please specify address",
+                Description: {
+                    required: "Please specify description",
+                    minlength: jQuery.validator.format("Enter at least {0} characters")
+                },
+                Email: "Please specify valid email",
+                Telephone : "provide valid mobile number"
+            }
+        });
+
+
+        $('.stepwizard-step a[id=companydetails]').removeClass('btn-default').addClass('btn-primary');
+        $('.stepwizard-step a[id=userdetails]').removeClass('btn-primary').addClass('btn-default');
+        $('.stepwizard-step a[id=connectiondetails]').removeClass('btn-primary').addClass('btn-default');
+
+    })    
+</script>
